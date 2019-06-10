@@ -18,26 +18,30 @@ restService.use(express.static(publicDir));
 restService.use(bodyParser.json());
 
 restService.get('/image/:size', (req, res) => {
-  const requestedSize = parseInt(req.params['size']);
-  // let fileName = 'public/images/imagemap/richmenu-2500x1686.jpg'
-  // let inStream = fs.createReadStream(fileName);
-  // let outStream = fs.createWriteStream('public/images/imagemap/' + requestedSize + '.jpg', { flags: "w" });
-  // outStream.on('error', function () {
-  //   console.log("Error");
-  // });
-  // outStream.on('close', function () {
-  //   console.log("Successfully saved file");
-  // });
-  // let transform = sharp()
-  //   .resize({ width: requestedSize})
-  //   .on('info', function (fileInfo) {
-  //     console.log("Resizing done, file not saved");
-  //   });
-  //   inStream.pipe(transform).pipe(outStream);
-  //inStream.pipe(transform).pipe(res);
-
-  res.type('image/jpeg');
-  fs.createReadStream('public/images/imagemap/' + requestedSize + '.jpg').pipe(res);
+  return new Promise((resolve, reject) => {
+    try {
+      const requestedSize = parseInt(req.params['size']);
+      let fileName = 'public/images/imagemap/richmenu-2500x1686.jpg'
+      let inStream = fs.createReadStream(fileName);
+      let outStream = fs.createWriteStream('public/images/imagemap/' + requestedSize + '.jpg', { flags: "w" });
+      outStream.on('error', function () {
+        console.log("Error");
+      });
+      outStream.on('close', function () {
+        console.log("Successfully saved file");
+        res.type('image/jpeg');
+        fs.createReadStream('public/images/imagemap/' + requestedSize + '.jpg').pipe(res);
+      });
+      let transform = sharp()
+        .resize({ width: requestedSize })
+        .on('info', function (fileInfo) {
+          console.log("Resizing done, file not saved");
+        });
+      resolve(inStream.pipe(transform).pipe(outStream));
+    } catch (error) {
+      reject(error)
+    }
+  })
 });
 
 restService.post("/webhook", function (req, res) {

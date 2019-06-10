@@ -2,6 +2,7 @@
 
 const express = require("express");
 const fs = require("fs");
+const sharp = require('sharp');
 const bodyParser = require("body-parser");
 const axios = require('axios');
 const moment = require('moment');
@@ -16,11 +17,27 @@ restService.use(
 restService.use(express.static(publicDir));
 restService.use(bodyParser.json());
 
-restService.get('/image/:category/:size', (req, res) => {
-  const requestedCategory = req.params['category'];
-  const requestedSize = req.params['size'];
+restService.get('/image/:size', (req, res) => {
+  const requestedSize = parseInt(req.params['size']);
+  // let fileName = 'public/images/imagemap/richmenu-2500x1686.jpg'
+  // let inStream = fs.createReadStream(fileName);
+  // let outStream = fs.createWriteStream('public/images/imagemap/' + requestedSize + '.jpg', { flags: "w" });
+  // outStream.on('error', function () {
+  //   console.log("Error");
+  // });
+  // outStream.on('close', function () {
+  //   console.log("Successfully saved file");
+  // });
+  // let transform = sharp()
+  //   .resize({ width: requestedSize})
+  //   .on('info', function (fileInfo) {
+  //     console.log("Resizing done, file not saved");
+  //   });
+  //   inStream.pipe(transform).pipe(outStream);
+  //inStream.pipe(transform).pipe(res);
+
   res.type('image/jpeg');
-  fs.createReadStream('public/images/' + requestedCategory + '/' + requestedSize + '.jpg').pipe(res);
+  fs.createReadStream('public/images/imagemap/' + requestedSize + '.jpg').pipe(res);
 });
 
 restService.post("/webhook", function (req, res) {

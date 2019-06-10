@@ -1,19 +1,27 @@
 "use strict";
 
 const express = require("express");
+const fs = require("fs");
 const bodyParser = require("body-parser");
 const axios = require('axios');
 const moment = require('moment');
 moment.locale('th');
 const restService = express("");
-
+const publicDir = require('path').join(__dirname, '/public');
 restService.use(
   bodyParser.urlencoded({
     extended: true
   })
 );
-
+restService.use(express.static(publicDir));
 restService.use(bodyParser.json());
+
+restService.get('/image/:category/:size', (req, res) => {
+  const requestedCategory = req.params['category'];
+  const requestedSize = req.params['size'];
+  res.type('image/jpeg');
+  fs.createReadStream('public/images/' + requestedCategory + '/' + requestedSize + '.jpg').pipe(res);
+});
 
 restService.post("/webhook", function (req, res) {
   const toTwoDigits = num => (num < 10 ? "0" + num : num);
@@ -70,7 +78,7 @@ restService.post("/webhook", function (req, res) {
                     "contents": [
                       {
                         "type": "text",
-                        "text": "วันที่ "+ToDay,
+                        "text": "วันที่ " + ToDay,
                         "align": "center"
                       },
                       {
@@ -147,7 +155,7 @@ restService.post("/webhook", function (req, res) {
                     "contents": [
                       {
                         "type": "text",
-                        "text": "วันที่ "+ToDay,
+                        "text": "วันที่ " + ToDay,
                         "align": "center"
                       },
                       {

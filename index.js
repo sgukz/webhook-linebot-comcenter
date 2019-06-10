@@ -81,7 +81,8 @@ restService.post("/webhook", function (req, res) {
                         "type": "text",
                         "text": result1,
                         "weight": "bold",
-                        "size": "xl"
+                        "size": "xl",
+                        "align": "center"
                       },
                       {
                         "type": "text",
@@ -91,7 +92,8 @@ restService.post("/webhook", function (req, res) {
                         "type": "text",
                         "text": result2,
                         "weight": "bold",
-                        "size": "xl"
+                        "size": "xl",
+                        "align": "center"
                       }
                     ]
                   }

@@ -15,6 +15,14 @@ restService.use(
 restService.use(bodyParser.json());
 
 restService.post("/webhook", function (req, res) {
+  const toTwoDigits = num => (num < 10 ? "0" + num : num);
+  let today = new Date();
+  let year = today.getFullYear();
+  let year_TH = parseInt(today.getFullYear()) + 543;
+  let month = toTwoDigits(today.getMonth() + 1);
+  let day = toTwoDigits(today.getDate());
+  let ToDay = moment().format('LL');
+  let date_now = `${year}-${month}-${day}`;
   let userMessage = req.body.events[0].message.text;
   let userId = req.body.events[0].source.userId;
   if (userMessage == "เวรบ่าย" || userMessage == "เวรบ่ายใคร" || userMessage == "บ่าย") {

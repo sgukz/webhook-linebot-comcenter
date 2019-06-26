@@ -14,6 +14,7 @@ restService.use(
 );
 restService.use(bodyParser.json());
 restService.post("/body", function (req, res) {
+  let userId = req.body.events[0].source.userId;
   let formatMessage = {
     "type": "text",
     "text": JSON.stringify(req.body)

@@ -37,7 +37,12 @@ restService.post("/webhook", function (req, res) {
   let ToDay = moment().format('LL');
   let date_now = `${year}-${month}-${day}`;
   let userMessage = req.body.events[0].message.text;
-  let userId = req.body.events[0].source.userId;
+  let userId = ""
+  if(req.body.events[0].source.groupId != undefined){
+    userId = req.body.events[0].source.groupId
+  }else{
+    userId = req.body.events[0].source.userId    
+  }
   if (userMessage == "เวรบ่าย" || userMessage == "เวรบ่ายใคร" || userMessage == "บ่าย") {
     axios
       .post("http://49.231.5.51:3000/getOT", {

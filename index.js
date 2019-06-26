@@ -176,6 +176,138 @@ restService.post("/webhook", function (req, res) {
         res.sendStatus(200)
       })
       .catch(error => console.log("Error :", error));
+  }else if(userMessage == "เวร"){
+    axios
+    .post("http://49.231.5.51:3000/getOT", {
+      dateStart: date_now
+    })
+    .then(resp => {
+      let result1 = ""
+      let result2 = ""
+      let data = resp.data;
+      result1 = data.dataParse.name_admin
+      result2 = data.dataParse.name_tech
+      let formatMessage1 = {
+        "type": "flex",
+        "altText": "เวรบ่ายศูนย์คอมพิวเตอร์ ",
+        "contents": {
+          "type": "bubble",
+          "styles": {
+            "header": {
+              "backgroundColor": "#f39c12"
+            }
+          },
+          "header": {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "text",
+                "text": "เวรบ่ายศูนย์คอมพิวเตอร์",
+                "weight": "bold",
+                "size": "md",
+                "gravity": "top",
+                "color": "#FFFFFF",
+                "flex": 0
+              }
+            ]
+          },
+          "body": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "วันที่ " + ToDay,
+                "align": "center"
+              },
+              {
+                "type": "text",
+                "text": "โปรแกรมเมอร์"
+              },
+              {
+                "type": "text",
+                "text": result1,
+                "weight": "bold",
+                "size": "xl",
+                "align": "center"
+              },
+              {
+                "type": "text",
+                "text": "ช่างเทคนิค"
+              },
+              {
+                "type": "text",
+                "text": result2,
+                "weight": "bold",
+                "size": "xl",
+                "align": "center"
+              }
+            ]
+          }
+        }
+      }
+      reply(userId, formatMessage1)
+      res.sendStatus(200)
+    })
+    .catch(error => console.log("Error :", error));
+    axios
+      .post("http://49.231.5.51:3000/getDuty", {
+        dateStart: date_now
+      })
+      .then(resp => {
+        let result = ""
+        let data = resp.data;
+        result = data.dataParse.name
+        let formatMessage2 = {
+          "type": "flex",
+          "altText": "เวรเที่ยงศูนย์คอมฯ ",
+          "contents": {
+            "type": "bubble",
+            "styles": {
+              "header": {
+                "backgroundColor": "#28b463"
+              }
+            },
+            "header": {
+              "type": "box",
+              "layout": "baseline",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "เวรเที่ยงศูนย์คอมฯ",
+                  "weight": "bold",
+                  "size": "md",
+                  "gravity": "top",
+                  "color": "#FFFFFF",
+                  "flex": 0
+                }
+              ]
+            },
+            "body": {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "วันที่ " + ToDay,
+                  "align": "center"
+                },
+                {
+                  "type": "text",
+                  "text": result,
+                  "weight": "bold",
+                  "size": "xl",
+                  "align": "center"
+                }
+              ]
+            }
+          }
+        }
+        reply(userId, formatMessage2)
+        res.sendStatus(200)
+      })
+      .catch(error => console.log("Error :", error));
   }
 });
 

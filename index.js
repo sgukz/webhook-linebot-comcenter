@@ -13,7 +13,14 @@ restService.use(
   })
 );
 restService.use(bodyParser.json());
-
+restService.post("/body", function (req, res) {
+  let formatMessage = {
+    "type": "text",
+    "text": JSON.stringify(req.body)
+  }
+  reply(userId, formatMessage)
+  res.sendStatus(200)
+});
 restService.post("/webhook", function (req, res) {
   const toTwoDigits = num => (num < 10 ? "0" + num : num);
   let today = new Date();

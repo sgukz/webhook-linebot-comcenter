@@ -43,7 +43,7 @@ restService.post("/webhook", function (req, res) {
   }else{
     userId = req.body.events[0].source.userId    
   }
-  if (userMessage == "เวรบ่าย" || userMessage == "เวรบ่ายใคร" || userMessage == "บ่าย") {
+  if (userMessage == "เวรบ่าย" || userMessage == "เวรบ่ายใคร" || userMessage == "บ่าย" || userMessage == "เวรแลง") {
     axios
       .post("http://49.231.5.51:3000/getOT", {
         dateStart: date_now

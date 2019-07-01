@@ -1,24 +1,23 @@
 const express = require("express");
-const fs = require("fs");
-const sharp = require('sharp');
 const bodyParser = require("body-parser");
 const axios = require('axios');
 const moment = require('moment');
 const request = require('request')
 moment.locale('th');
-const restService = express("");
-restService.use(
+const app = express();
+app.use(
   bodyParser.urlencoded({
     extended: true
   })
 );
-restService.use(bodyParser.json());
-restService.post("/body", function (req, res) {
+app.use(bodyParser.json());
+// router test request
+app.post("/body", function (req, res) {
   let userId = ""
-  if(req.body.events[0].source.groupId != undefined){
+  if (req.body.events[0].source.groupId != undefined) {
     userId = req.body.events[0].source.groupId
-  }else{
-    userId = req.body.events[0].source.userId    
+  } else {
+    userId = req.body.events[0].source.userId
   }
   let formatMessage = {
     "type": "text",
@@ -27,7 +26,7 @@ restService.post("/body", function (req, res) {
   reply(userId, formatMessage)
   res.sendStatus(200)
 });
-restService.post("/webhook", function (req, res) {
+app.post("/webhook", function (req, res) {
   const toTwoDigits = num => (num < 10 ? "0" + num : num);
   let today = new Date();
   let year = today.getFullYear();
@@ -38,10 +37,10 @@ restService.post("/webhook", function (req, res) {
   let date_now = `${year}-${month}-${day}`;
   let userMessage = req.body.events[0].message.text;
   let userId = ""
-  if(req.body.events[0].source.groupId != undefined){
+  if (req.body.events[0].source.groupId != undefined) {
     userId = req.body.events[0].source.groupId
-  }else{
-    userId = req.body.events[0].source.userId    
+  } else {
+    userId = req.body.events[0].source.userId
   }
   if (userMessage == "เวรบ่าย" || userMessage == "เวรบ่ายใคร" || userMessage == "บ่าย" || userMessage == "เวรแลง") {
     axios
@@ -176,81 +175,83 @@ restService.post("/webhook", function (req, res) {
         res.sendStatus(200)
       })
       .catch(error => console.log("Error :", error));
-  }else if(userMessage == "เวร"){
+  } else if (userMessage == "เวร") {
     axios
-    .post("http://49.231.5.51:3000/getOT", {
-      dateStart: date_now
-    })
-    .then(resp => {
-      let result1 = ""
-      let result2 = ""
-      let data = resp.data;
-      result1 = data.dataParse.name_admin
-      result2 = data.dataParse.name_tech
-      let formatMessage1 = {
-        "type": "flex",
-        "altText": "เวรบ่ายศูนย์คอมพิวเตอร์ ",
-        "contents": {
-          "type": "bubble",
-          "styles": {
+      .post("http://49.231.5.51:3000/getOT", {
+        dateStart: date_now
+      })
+      .then(resp => {
+        let result1 = ""
+        let result2 = ""
+        let data = resp.data;
+        result1 = data.dataParse.name_admin
+        result2 = data.dataParse.name_tech
+        let formatMessage1 = {
+          "type": "flex",
+          "altText": "เวรบ่ายศูนย์คอมพิวเตอร์ ",
+          "contents": {
+            "type": "bubble",
+            "styles": {
+              "header": {
+                "backgroundColor": "#f39c12"
+              }
+            },
             "header": {
-              "backgroundColor": "#f39c12"
+              "type": "box",
+              "layout": "baseline",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "เวรบ่ายศูนย์คอมพิวเตอร์",
+                  "weight": "bold",
+                  "size": "md",
+                  "gravity": "top",
+                  "color": "#FFFFFF",
+                  "flex": 0
+                }
+              ]
+            },
+            "body": {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "วันที่ " + ToDay,
+                  "align": "center"
+                },
+                {
+                  "type": "text",
+                  "text": "โปรแกรมเมอร์"
+                },
+                {
+                  "type": "text",
+                  "text": result1,
+                  "weight": "bold",
+                  "size": "xl",
+                  "align": "center"
+                },
+                {
+                  "type": "text",
+                  "text": "ช่างเทคนิค"
+                },
+                {
+                  "type": "text",
+                  "text": result2,
+                  "weight": "bold",
+                  "size": "xl",
+                  "align": "center"
+                }
+              ]
             }
-          },
-          "header": {
-            "type": "box",
-            "layout": "baseline",
-            "contents": [
-              {
-                "type": "text",
-                "text": "เวรบ่ายศูนย์คอมพิวเตอร์",
-                "weight": "bold",
-                "size": "md",
-                "gravity": "top",
-                "color": "#FFFFFF",
-                "flex": 0
-              }
-            ]
-          },
-          "body": {
-            "type": "box",
-            "layout": "vertical",
-            "contents": [
-              {
-                "type": "text",
-                "text": "วันที่ " + ToDay,
-                "align": "center"
-              },
-              {
-                "type": "text",
-                "text": "โปรแกรมเมอร์"
-              },
-              {
-                "type": "text",
-                "text": result1,
-                "weight": "bold",
-                "size": "xl",
-                "align": "center"
-              },
-              {
-                "type": "text",
-                "text": "ช่างเทคนิค"
-              },
-              {
-                "type": "text",
-                "text": result2,
-                "weight": "bold",
-                "size": "xl",
-                "align": "center"
-              }
-            ]
           }
         }
-      }
-      reply(userId, formatMessage1)
-      res.sendStatus(200)
-    })
-    .catch(error => console.log("Error :", error));
+        reply(userId, formatMessage1)
+        res.sendStatus(200)
+      })
+      .catch(error => {
+        return console.log("Error :", error);
+      });
     axios
       .post("http://49.231.5.51:3000/getDuty", {
         dateStart: date_now
@@ -307,14 +308,16 @@ restService.post("/webhook", function (req, res) {
         reply(userId, formatMessage2)
         res.sendStatus(200)
       })
-      .catch(error => console.log("Error :", error));
+      .catch(error => {
+        return console.log("Error :", error);
+      });
   }
 });
 
 function reply(userId, formatMessage) {
   let headers = {
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer {VdKGNhSVx5cGjQ4bWjbVPmD88+MXVwHCS9oTJu5sZZgx2rFGa+bq93E3oQVo6ExDSZIFApjjR5GT30d+ca7IXPEpS30Ggnvkq1JEuQB2eVsHRJ6cCsZEC1Cf9Em2VPWhvQVxZbSBh6pBMV9HP+f0EQdB04t89/1O/w1cDnyilFU=}'
+    'Authorization': 'Bearer {<Channel access token>}' // Channel access token
   }
   let body = JSON.stringify({
     to: userId,
@@ -328,6 +331,6 @@ function reply(userId, formatMessage) {
     console.log('status = ' + res.statusCode);
   });
 }
-restService.listen(process.env.PORT || 8000, function () {
+app.listen(process.env.PORT || 8000, function () {
   console.log("Server up and listening");
 });

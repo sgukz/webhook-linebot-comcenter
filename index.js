@@ -317,7 +317,7 @@ app.post("/webhook", function (req, res) {
 function reply(userId, formatMessage) {
   let headers = {
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer {<Channel access token>}' // Channel access token
+    'Authorization': 'Bearer {VdKGNhSVx5cGjQ4bWjbVPmD88+MXVwHCS9oTJu5sZZgx2rFGa+bq93E3oQVo6ExDSZIFApjjR5GT30d+ca7IXPEpS30Ggnvkq1JEuQB2eVsHRJ6cCsZEC1Cf9Em2VPWhvQVxZbSBh6pBMV9HP+f0EQdB04t89/1O/w1cDnyilFU=}' // Channel access token
   }
   let body = JSON.stringify({
     to: userId,

@@ -100,7 +100,7 @@ app.post("/webhook", function(req, res) {
                                     type: "text",
                                     text: result1,
                                     weight: "bold",
-                                    size: "xl",
+                                    size: "md",
                                     align: "center"
                                 },
                                 {
@@ -111,7 +111,7 @@ app.post("/webhook", function(req, res) {
                                     type: "text",
                                     text: result2,
                                     weight: "bold",
-                                    size: "xl",
+                                    size: "md",
                                     align: "center"
                                 }
                             ]
@@ -173,7 +173,7 @@ app.post("/webhook", function(req, res) {
                                     type: "text",
                                     text: result,
                                     weight: "bold",
-                                    size: "xl",
+                                    size: "md",
                                     align: "center"
                                 }
                             ]
@@ -237,7 +237,7 @@ app.post("/webhook", function(req, res) {
                                     type: "text",
                                     text: result1,
                                     weight: "bold",
-                                    size: "xl",
+                                    size: "md",
                                     align: "center"
                                 },
                                 {
@@ -248,7 +248,7 @@ app.post("/webhook", function(req, res) {
                                     type: "text",
                                     text: result2,
                                     weight: "bold",
-                                    size: "xl",
+                                    size: "md",
                                     align: "center"
                                 }
                             ]
@@ -307,7 +307,7 @@ app.post("/webhook", function(req, res) {
                                     type: "text",
                                     text: result,
                                     weight: "bold",
-                                    size: "xl",
+                                    size: "md",
                                     align: "center"
                                 }
                             ]

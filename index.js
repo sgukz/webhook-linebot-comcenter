@@ -35,7 +35,7 @@ app.post("/webhook", function(req, res) {
     let day = toTwoDigits(today.getDate());
     let ToDay = moment().format("LL");
     let date_now = `${year}-${month}-${day}`;
-    let Months = moment().format("MMMM YYYY, H:mm:ss");
+    let Months = moment().format("MMMM YYYY");
     let userMessage = req.body.events[0].message.text;
     let userId = "";
     if (req.body.events[0].source.groupId != undefined) {
@@ -94,7 +94,7 @@ app.post("/webhook", function(req, res) {
                                 contents: [
                                     {
                                         type: "text",
-                                        text: todays,
+                                        text: Months,
                                         size: "md",
                                         weight: "bold"
                                     },

@@ -56,8 +56,8 @@ app.post("/webhook", function(req, res) {
                    let data = resp.data;
                     data.dataParse.forEach(element => {
                         let todays = new Date(element.date_time);
-                        admin.push(element.name_admin, todays.getDate().toLocaleString('th-TH', { timeZone: 'UTC' }));
-                        tech.push(element.name_tech, todays.getDate().toLocaleString('th-TH', { timeZone: 'UTC' }));
+                        admin.push(element.name_admin, todays.getDate().toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' }));
+                        tech.push(element.name_tech, todays.getDate().toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' }));
                     });
                     let formatMessage = {
                         type: "flex",

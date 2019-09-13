@@ -35,6 +35,7 @@ app.post("/webhook", function(req, res) {
     let day = toTwoDigits(today.getDate());
     let ToDay = moment().format("LL");
     let date_now = `${year}-${month}-${day}`;
+    let Months = moment().format("MMMM YYYY, H:mm:ss");
     let userMessage = req.body.events[0].message.text;
     let userId = "";
     if (req.body.events[0].source.groupId != undefined) {
@@ -50,74 +51,385 @@ app.post("/webhook", function(req, res) {
     ) {
         axios
             .post("http://49.231.5.51:3000/getOT", {
-                dateStart: date_now
+                dateStart: ''
             })
             .then(resp => {
-                let result1 = "";
-                let result2 = "";
-                let data = resp.data;
-                result1 = data.dataParse.name_admin;
-                result2 = data.dataParse.name_tech;
-                let formatMessage = {
-                    type: "flex",
-                    altText: "เวรบ่ายศูนย์คอมพิวเตอร์ ",
-                    contents: {
-                        type: "bubble",
-                        styles: {
+                let admin = [];
+                    let tech = [];
+                    let data = resp.data;
+                    data.dataParse.forEach(element => {
+                        let todays = new Date(element.date_time);
+                        admin.push(element.name_admin, todays.getDate());
+                        tech.push(element.name_tech, todays.getDate());
+                    });
+                    let formatMessage1 = {
+                        type: "flex",
+                        altText: "เวรบ่ายศูนย์คอมพิวเตอร์ ",
+                        contents: {
+                            type: "bubble",
+                            size: "mega",
                             header: {
-                                backgroundColor: "#f39c12"
+                                type: "box",
+                                layout: "vertical",
+                                contents: [
+                                    {
+                                        type: "box",
+                                        layout: "vertical",
+                                        contents: [
+                                            {
+                                                type: "text",
+                                                text: "เวรบ่ายศูนย์คอมพิวเตอร์",
+                                                color: "#ffffff",
+                                                size: "xl",
+                                                flex: 1,
+                                                weight: "bold"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                paddingAll: "20px",
+                                backgroundColor: "#0367D3",
+                                spacing: "md",
+                                paddingTop: "22px"
+                            },
+                            body: {
+                                type: "box",
+                                layout: "vertical",
+                                contents: [
+                                    {
+                                        type: "text",
+                                        text: Months,
+                                        size: "md",
+                                        weight: "bold"
+                                    },
+                                    {
+                                        type: "box",
+                                        layout: "horizontal",
+                                        contents: [
+                                            {
+                                                type: "text",
+                                                text: "วันนี้",
+                                                size: "sm",
+                                                color: "#8c8c8c",
+                                                gravity: "center"
+                                            },
+                                            {
+                                                type: "box",
+                                                layout: "vertical",
+                                                contents: [
+                                                    {
+                                                        type: "filler"
+                                                    },
+                                                    {
+                                                        type: "box",
+                                                        layout: "vertical",
+                                                        contents: [
+                                                            {
+                                                                type: "filler"
+                                                            }
+                                                        ],
+                                                        cornerRadius: "30px",
+                                                        height: "12px",
+                                                        width: "12px",
+                                                        borderColor: "#EF454D",
+                                                        borderWidth: "2px"
+                                                    },
+                                                    {
+                                                        type: "filler"
+                                                    }
+                                                ],
+                                                flex: 0
+                                            },
+                                            {
+                                                type: "text",
+                                                text: admin[0],
+                                                gravity: "center",
+                                                flex: 4,
+                                                size: "md",
+                                                weight: "bold"
+                                            }
+                                        ],
+                                        spacing: "lg",
+                                        cornerRadius: "30px",
+                                        margin: "xl"
+                                    },
+                                    {
+                                        type: "box",
+                                        layout: "horizontal",
+                                        contents: [
+                                            {
+                                                type: "box",
+                                                layout: "baseline",
+                                                contents: [
+                                                    {
+                                                        type: "filler"
+                                                    }
+                                                ],
+                                                flex: 1
+                                            },
+                                            {
+                                                type: "box",
+                                                layout: "vertical",
+                                                contents: [
+                                                    {
+                                                        type: "box",
+                                                        layout: "horizontal",
+                                                        contents: [
+                                                            {
+                                                                type: "filler"
+                                                            },
+                                                            {
+                                                                type: "box",
+                                                                layout:
+                                                                    "vertical",
+                                                                contents: [
+                                                                    {
+                                                                        type:
+                                                                            "filler"
+                                                                    }
+                                                                ],
+                                                                width: "2px",
+                                                                backgroundColor:
+                                                                    "#B7B7B7"
+                                                            },
+                                                            {
+                                                                type: "filler"
+                                                            }
+                                                        ],
+                                                        flex: 1
+                                                    }
+                                                ],
+                                                width: "12px"
+                                            },
+                                            {
+                                                type: "text",
+                                                text:
+                                                    "ผู้ดูแลระบบและช่างเทคนิค",
+                                                gravity: "center",
+                                                flex: 4,
+                                                size: "sm",
+                                                color: "#8c8c8c"
+                                            }
+                                        ],
+                                        spacing: "lg",
+                                        height: "40px"
+                                    },
+                                    {
+                                        type: "box",
+                                        layout: "horizontal",
+                                        contents: [
+                                            {
+                                                type: "text",
+                                                text: "" + admin[1] + "",
+                                                size: "sm",
+                                                color: "#8c8c8c",
+                                                gravity: "center"
+                                            },
+                                            {
+                                                type: "box",
+                                                layout: "vertical",
+                                                contents: [
+                                                    {
+                                                        type: "filler"
+                                                    },
+                                                    {
+                                                        type: "box",
+                                                        layout: "vertical",
+                                                        contents: [
+                                                            {
+                                                                type: "filler"
+                                                            }
+                                                        ],
+                                                        cornerRadius: "30px",
+                                                        width: "12px",
+                                                        height: "12px",
+                                                        borderWidth: "2px",
+                                                        borderColor: "#6486E3"
+                                                    },
+                                                    {
+                                                        type: "filler"
+                                                    }
+                                                ],
+                                                flex: 0
+                                            },
+                                            {
+                                                type: "text",
+                                                text: tech[0],
+                                                gravity: "center",
+                                                flex: 4,
+                                                size: "md",
+                                                weight: "bold"
+                                            }
+                                        ],
+                                        spacing: "lg",
+                                        cornerRadius: "30px"
+                                    },
+                                    {
+                                        type: "box",
+                                        layout: "horizontal",
+                                        contents: [
+                                            {
+                                                type: "text",
+                                                text: "พรุ่งนี้",
+                                                size: "sm",
+                                                color: "#8c8c8c",
+                                                gravity: "center"
+                                            },
+                                            {
+                                                type: "box",
+                                                layout: "vertical",
+                                                contents: [
+                                                    {
+                                                        type: "filler"
+                                                    },
+                                                    {
+                                                        type: "box",
+                                                        layout: "vertical",
+                                                        contents: [
+                                                            {
+                                                                type: "filler"
+                                                            }
+                                                        ],
+                                                        cornerRadius: "30px",
+                                                        width: "12px",
+                                                        height: "12px",
+                                                        borderWidth: "2px",
+                                                        borderColor: "#EF454D"
+                                                    },
+                                                    {
+                                                        type: "filler"
+                                                    }
+                                                ],
+                                                flex: 0
+                                            },
+                                            {
+                                                type: "text",
+                                                text: admin[2],
+                                                gravity: "center",
+                                                flex: 4,
+                                                size: "md",
+                                                weight: "bold"
+                                            }
+                                        ],
+                                        spacing: "lg",
+                                        cornerRadius: "30px",
+                                        margin: "xl"
+                                    },
+                                    {
+                                        type: "box",
+                                        layout: "horizontal",
+                                        contents: [
+                                            {
+                                                type: "box",
+                                                layout: "baseline",
+                                                contents: [
+                                                    {
+                                                        type: "filler"
+                                                    }
+                                                ],
+                                                flex: 1
+                                            },
+                                            {
+                                                type: "box",
+                                                layout: "vertical",
+                                                contents: [
+                                                    {
+                                                        type: "box",
+                                                        layout: "horizontal",
+                                                        contents: [
+                                                            {
+                                                                type: "filler"
+                                                            },
+                                                            {
+                                                                type: "box",
+                                                                layout:
+                                                                    "vertical",
+                                                                contents: [
+                                                                    {
+                                                                        type:
+                                                                            "filler"
+                                                                    }
+                                                                ],
+                                                                width: "2px",
+                                                                backgroundColor:
+                                                                    "#B7B7B7"
+                                                            },
+                                                            {
+                                                                type: "filler"
+                                                            }
+                                                        ],
+                                                        flex: 1
+                                                    }
+                                                ],
+                                                width: "12px"
+                                            },
+                                            {
+                                                type: "text",
+                                                text:
+                                                    "ผู้ดูแลระบบและช่างเทคนิค",
+                                                gravity: "center",
+                                                flex: 4,
+                                                size: "sm",
+                                                color: "#8c8c8c"
+                                            }
+                                        ],
+                                        spacing: "lg",
+                                        height: "40px"
+                                    },
+                                    {
+                                        type: "box",
+                                        layout: "horizontal",
+                                        contents: [
+                                            {
+                                                type: "text",
+                                                text: "" + admin[3] + "",
+                                                size: "sm",
+                                                color: "#8c8c8c",
+                                                gravity: "center"
+                                            },
+                                            {
+                                                type: "box",
+                                                layout: "vertical",
+                                                contents: [
+                                                    {
+                                                        type: "filler"
+                                                    },
+                                                    {
+                                                        type: "box",
+                                                        layout: "vertical",
+                                                        contents: [
+                                                            {
+                                                                type: "filler"
+                                                            }
+                                                        ],
+                                                        cornerRadius: "30px",
+                                                        width: "12px",
+                                                        height: "12px",
+                                                        borderWidth: "2px",
+                                                        borderColor: "#6486E3"
+                                                    },
+                                                    {
+                                                        type: "filler"
+                                                    }
+                                                ],
+                                                flex: 0
+                                            },
+                                            {
+                                                type: "text",
+                                                text: tech[2],
+                                                gravity: "center",
+                                                flex: 4,
+                                                size: "md",
+                                                weight: "bold"
+                                            }
+                                        ],
+                                        spacing: "lg",
+                                        cornerRadius: "30px"
+                                    }
+                                ]
                             }
-                        },
-                        header: {
-                            type: "box",
-                            layout: "baseline",
-                            contents: [
-                                {
-                                    type: "text",
-                                    text: "เวรบ่ายศูนย์คอมพิวเตอร์",
-                                    weight: "bold",
-                                    size: "md",
-                                    gravity: "top",
-                                    color: "#FFFFFF",
-                                    flex: 0
-                                }
-                            ]
-                        },
-                        body: {
-                            type: "box",
-                            layout: "vertical",
-                            contents: [
-                                {
-                                    type: "text",
-                                    text: "วันที่ " + ToDay,
-                                    align: "center"
-                                },
-                                {
-                                    type: "text",
-                                    text: "โปรแกรมเมอร์"
-                                },
-                                {
-                                    type: "text",
-                                    text: result1,
-                                    weight: "bold",
-                                    size: "md",
-                                    align: "center"
-                                },
-                                {
-                                    type: "text",
-                                    text: "ช่างเทคนิค"
-                                },
-                                {
-                                    type: "text",
-                                    text: result2,
-                                    weight: "bold",
-                                    size: "md",
-                                    align: "center"
-                                }
-                            ]
                         }
-                    }
-                };
+                    };
                 reply(userId, formatMessage);
                 res.sendStatus(200);
             })
@@ -187,74 +499,385 @@ app.post("/webhook", function(req, res) {
     } else if (userMessage == "เวร") {
         axios
             .post("http://49.231.5.51:3000/getOT", {
-                dateStart: date_now
+                dateStart: ''
             })
             .then(resp => {
-                let result1 = "";
-                let result2 = "";
-                let data = resp.data;
-                result1 = data.dataParse.name_admin;
-                result2 = data.dataParse.name_tech;
-                let formatMessage1 = {
-                    type: "flex",
-                    altText: "เวรบ่ายศูนย์คอมพิวเตอร์ ",
-                    contents: {
-                        type: "bubble",
-                        styles: {
+                let admin = [];
+                    let tech = [];
+                    let data = resp.data;
+                    data.dataParse.forEach(element => {
+                        let todays = new Date(element.date_time);
+                        admin.push(element.name_admin, todays.getDate());
+                        tech.push(element.name_tech, todays.getDate());
+                    });
+                    let formatMessage1 = {
+                        type: "flex",
+                        altText: "เวรบ่ายศูนย์คอมพิวเตอร์ ",
+                        contents: {
+                            type: "bubble",
+                            size: "mega",
                             header: {
-                                backgroundColor: "#f39c12"
+                                type: "box",
+                                layout: "vertical",
+                                contents: [
+                                    {
+                                        type: "box",
+                                        layout: "vertical",
+                                        contents: [
+                                            {
+                                                type: "text",
+                                                text: "เวรบ่ายศูนย์คอมพิวเตอร์",
+                                                color: "#ffffff",
+                                                size: "xl",
+                                                flex: 1,
+                                                weight: "bold"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                paddingAll: "20px",
+                                backgroundColor: "#0367D3",
+                                spacing: "md",
+                                paddingTop: "22px"
+                            },
+                            body: {
+                                type: "box",
+                                layout: "vertical",
+                                contents: [
+                                    {
+                                        type: "text",
+                                        text: Months,
+                                        size: "md",
+                                        weight: "bold"
+                                    },
+                                    {
+                                        type: "box",
+                                        layout: "horizontal",
+                                        contents: [
+                                            {
+                                                type: "text",
+                                                text: "วันนี้",
+                                                size: "sm",
+                                                color: "#8c8c8c",
+                                                gravity: "center"
+                                            },
+                                            {
+                                                type: "box",
+                                                layout: "vertical",
+                                                contents: [
+                                                    {
+                                                        type: "filler"
+                                                    },
+                                                    {
+                                                        type: "box",
+                                                        layout: "vertical",
+                                                        contents: [
+                                                            {
+                                                                type: "filler"
+                                                            }
+                                                        ],
+                                                        cornerRadius: "30px",
+                                                        height: "12px",
+                                                        width: "12px",
+                                                        borderColor: "#EF454D",
+                                                        borderWidth: "2px"
+                                                    },
+                                                    {
+                                                        type: "filler"
+                                                    }
+                                                ],
+                                                flex: 0
+                                            },
+                                            {
+                                                type: "text",
+                                                text: admin[0],
+                                                gravity: "center",
+                                                flex: 4,
+                                                size: "md",
+                                                weight: "bold"
+                                            }
+                                        ],
+                                        spacing: "lg",
+                                        cornerRadius: "30px",
+                                        margin: "xl"
+                                    },
+                                    {
+                                        type: "box",
+                                        layout: "horizontal",
+                                        contents: [
+                                            {
+                                                type: "box",
+                                                layout: "baseline",
+                                                contents: [
+                                                    {
+                                                        type: "filler"
+                                                    }
+                                                ],
+                                                flex: 1
+                                            },
+                                            {
+                                                type: "box",
+                                                layout: "vertical",
+                                                contents: [
+                                                    {
+                                                        type: "box",
+                                                        layout: "horizontal",
+                                                        contents: [
+                                                            {
+                                                                type: "filler"
+                                                            },
+                                                            {
+                                                                type: "box",
+                                                                layout:
+                                                                    "vertical",
+                                                                contents: [
+                                                                    {
+                                                                        type:
+                                                                            "filler"
+                                                                    }
+                                                                ],
+                                                                width: "2px",
+                                                                backgroundColor:
+                                                                    "#B7B7B7"
+                                                            },
+                                                            {
+                                                                type: "filler"
+                                                            }
+                                                        ],
+                                                        flex: 1
+                                                    }
+                                                ],
+                                                width: "12px"
+                                            },
+                                            {
+                                                type: "text",
+                                                text:
+                                                    "ผู้ดูแลระบบและช่างเทคนิค",
+                                                gravity: "center",
+                                                flex: 4,
+                                                size: "sm",
+                                                color: "#8c8c8c"
+                                            }
+                                        ],
+                                        spacing: "lg",
+                                        height: "40px"
+                                    },
+                                    {
+                                        type: "box",
+                                        layout: "horizontal",
+                                        contents: [
+                                            {
+                                                type: "text",
+                                                text: "" + admin[1] + "",
+                                                size: "sm",
+                                                color: "#8c8c8c",
+                                                gravity: "center"
+                                            },
+                                            {
+                                                type: "box",
+                                                layout: "vertical",
+                                                contents: [
+                                                    {
+                                                        type: "filler"
+                                                    },
+                                                    {
+                                                        type: "box",
+                                                        layout: "vertical",
+                                                        contents: [
+                                                            {
+                                                                type: "filler"
+                                                            }
+                                                        ],
+                                                        cornerRadius: "30px",
+                                                        width: "12px",
+                                                        height: "12px",
+                                                        borderWidth: "2px",
+                                                        borderColor: "#6486E3"
+                                                    },
+                                                    {
+                                                        type: "filler"
+                                                    }
+                                                ],
+                                                flex: 0
+                                            },
+                                            {
+                                                type: "text",
+                                                text: tech[0],
+                                                gravity: "center",
+                                                flex: 4,
+                                                size: "md",
+                                                weight: "bold"
+                                            }
+                                        ],
+                                        spacing: "lg",
+                                        cornerRadius: "30px"
+                                    },
+                                    {
+                                        type: "box",
+                                        layout: "horizontal",
+                                        contents: [
+                                            {
+                                                type: "text",
+                                                text: "พรุ่งนี้",
+                                                size: "sm",
+                                                color: "#8c8c8c",
+                                                gravity: "center"
+                                            },
+                                            {
+                                                type: "box",
+                                                layout: "vertical",
+                                                contents: [
+                                                    {
+                                                        type: "filler"
+                                                    },
+                                                    {
+                                                        type: "box",
+                                                        layout: "vertical",
+                                                        contents: [
+                                                            {
+                                                                type: "filler"
+                                                            }
+                                                        ],
+                                                        cornerRadius: "30px",
+                                                        width: "12px",
+                                                        height: "12px",
+                                                        borderWidth: "2px",
+                                                        borderColor: "#EF454D"
+                                                    },
+                                                    {
+                                                        type: "filler"
+                                                    }
+                                                ],
+                                                flex: 0
+                                            },
+                                            {
+                                                type: "text",
+                                                text: admin[2],
+                                                gravity: "center",
+                                                flex: 4,
+                                                size: "md",
+                                                weight: "bold"
+                                            }
+                                        ],
+                                        spacing: "lg",
+                                        cornerRadius: "30px",
+                                        margin: "xl"
+                                    },
+                                    {
+                                        type: "box",
+                                        layout: "horizontal",
+                                        contents: [
+                                            {
+                                                type: "box",
+                                                layout: "baseline",
+                                                contents: [
+                                                    {
+                                                        type: "filler"
+                                                    }
+                                                ],
+                                                flex: 1
+                                            },
+                                            {
+                                                type: "box",
+                                                layout: "vertical",
+                                                contents: [
+                                                    {
+                                                        type: "box",
+                                                        layout: "horizontal",
+                                                        contents: [
+                                                            {
+                                                                type: "filler"
+                                                            },
+                                                            {
+                                                                type: "box",
+                                                                layout:
+                                                                    "vertical",
+                                                                contents: [
+                                                                    {
+                                                                        type:
+                                                                            "filler"
+                                                                    }
+                                                                ],
+                                                                width: "2px",
+                                                                backgroundColor:
+                                                                    "#B7B7B7"
+                                                            },
+                                                            {
+                                                                type: "filler"
+                                                            }
+                                                        ],
+                                                        flex: 1
+                                                    }
+                                                ],
+                                                width: "12px"
+                                            },
+                                            {
+                                                type: "text",
+                                                text:
+                                                    "ผู้ดูแลระบบและช่างเทคนิค",
+                                                gravity: "center",
+                                                flex: 4,
+                                                size: "sm",
+                                                color: "#8c8c8c"
+                                            }
+                                        ],
+                                        spacing: "lg",
+                                        height: "40px"
+                                    },
+                                    {
+                                        type: "box",
+                                        layout: "horizontal",
+                                        contents: [
+                                            {
+                                                type: "text",
+                                                text: "" + admin[3] + "",
+                                                size: "sm",
+                                                color: "#8c8c8c",
+                                                gravity: "center"
+                                            },
+                                            {
+                                                type: "box",
+                                                layout: "vertical",
+                                                contents: [
+                                                    {
+                                                        type: "filler"
+                                                    },
+                                                    {
+                                                        type: "box",
+                                                        layout: "vertical",
+                                                        contents: [
+                                                            {
+                                                                type: "filler"
+                                                            }
+                                                        ],
+                                                        cornerRadius: "30px",
+                                                        width: "12px",
+                                                        height: "12px",
+                                                        borderWidth: "2px",
+                                                        borderColor: "#6486E3"
+                                                    },
+                                                    {
+                                                        type: "filler"
+                                                    }
+                                                ],
+                                                flex: 0
+                                            },
+                                            {
+                                                type: "text",
+                                                text: tech[2],
+                                                gravity: "center",
+                                                flex: 4,
+                                                size: "md",
+                                                weight: "bold"
+                                            }
+                                        ],
+                                        spacing: "lg",
+                                        cornerRadius: "30px"
+                                    }
+                                ]
                             }
-                        },
-                        header: {
-                            type: "box",
-                            layout: "baseline",
-                            contents: [
-                                {
-                                    type: "text",
-                                    text: "เวรบ่ายศูนย์คอมพิวเตอร์",
-                                    weight: "bold",
-                                    size: "md",
-                                    gravity: "top",
-                                    color: "#FFFFFF",
-                                    flex: 0
-                                }
-                            ]
-                        },
-                        body: {
-                            type: "box",
-                            layout: "vertical",
-                            contents: [
-                                {
-                                    type: "text",
-                                    text: "วันที่ " + ToDay,
-                                    align: "center"
-                                },
-                                {
-                                    type: "text",
-                                    text: "โปรแกรมเมอร์"
-                                },
-                                {
-                                    type: "text",
-                                    text: result1,
-                                    weight: "bold",
-                                    size: "md",
-                                    align: "center"
-                                },
-                                {
-                                    type: "text",
-                                    text: "ช่างเทคนิค"
-                                },
-                                {
-                                    type: "text",
-                                    text: result2,
-                                    weight: "bold",
-                                    size: "md",
-                                    align: "center"
-                                }
-                            ]
                         }
-                    }
-                };
+                    };
                 reply(userId, formatMessage1);
                 res.sendStatus(200);
             })

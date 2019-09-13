@@ -55,9 +55,8 @@ app.post("/webhook", function(req, res) {
                   let tech = [];
                    let data = resp.data;
                     data.dataParse.forEach(element => {
-                        let todays = new Date(element.date_time);
-                        admin.push(element.name_admin, todays.getDate().toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' }));
-                        tech.push(element.name_tech, todays.getDate().toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' }));
+                        admin.push(element.name_admin, element.date_time);
+                        tech.push(element.name_tech, element.date_time);
                     });
                     let formatMessage = {
                         type: "flex",
@@ -503,9 +502,8 @@ app.post("/webhook", function(req, res) {
                     let tech = [];
                     let data = resp.data;
                     data.dataParse.forEach(element => {
-                        let todays = new Date(element.date_time);
-                        admin.push(element.name_admin, todays.getDate());
-                        tech.push(element.name_tech, todays.getDate());
+                        admin.push(element.name_admin, element.date_time);
+                        tech.push(element.name_tech, element.date_time);
                     });
                     let formatMessage1 = {
                         type: "flex",

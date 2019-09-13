@@ -44,10 +44,7 @@ app.post("/webhook", function(req, res) {
         userId = req.body.events[0].source.userId;
     }
     if (
-        userMessage == "เวรบ่าย" ||
-        userMessage == "เวรบ่ายใคร" ||
-        userMessage == "บ่าย" ||
-        userMessage == "เวรแลง"
+        userMessage == "เวรบ่าย" || userMessage == "บ่าย"
     ) {
         axios
             .post("http://49.231.5.51:3000/getOT", {
@@ -55,14 +52,14 @@ app.post("/webhook", function(req, res) {
             })
             .then(resp => {
                 let admin = [];
-                    let tech = [];
-                    let data = resp.data;
+                  let tech = [];
+                   let data = resp.data;
                     data.dataParse.forEach(element => {
                         let todays = new Date(element.date_time);
                         admin.push(element.name_admin, todays.getDate());
                         tech.push(element.name_tech, todays.getDate());
                     });
-                    let formatMessage1 = {
+                    let formatMessage = {
                         type: "flex",
                         altText: "เวรบ่ายศูนย์คอมพิวเตอร์ ",
                         contents: {

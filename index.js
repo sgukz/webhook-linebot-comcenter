@@ -58,6 +58,12 @@ app.post("/webhook", function(req, res) {
                         admin.push(element.name_admin, element.date_time);
                         tech.push(element.name_tech, element.date_time);
                     });
+                    let Tomorrow =
+                        typeof admin[2] === "undefined" ? "-" : admin[2];
+                    let adminTomorrow =
+                        typeof admin[3] === "undefined" ? "-" : admin[3];
+                    let techTomorrow =
+                        typeof tech[2] === "undefined" ? "-" : tech[2];
                     let formatMessage = {
                         type: "flex",
                         altText: "เวรบ่ายศูนย์คอมพิวเตอร์ ",
@@ -300,7 +306,7 @@ app.post("/webhook", function(req, res) {
                                             },
                                             {
                                                 type: "text",
-                                                text: admin[2],
+                                                text: Tomorrow,
                                                 gravity: "center",
                                                 flex: 4,
                                                 size: "md",
@@ -378,7 +384,7 @@ app.post("/webhook", function(req, res) {
                                         contents: [
                                             {
                                                 type: "text",
-                                                text: "" + admin[3] + "",
+                                                text: "" + adminTomorrow + "",
                                                 size: "sm",
                                                 color: "#8c8c8c",
                                                 gravity: "center"
@@ -412,7 +418,7 @@ app.post("/webhook", function(req, res) {
                                             },
                                             {
                                                 type: "text",
-                                                text: tech[2],
+                                                text: "" + techTomorrow + "",
                                                 gravity: "center",
                                                 flex: 4,
                                                 size: "md",
@@ -505,6 +511,12 @@ app.post("/webhook", function(req, res) {
                         admin.push(element.name_admin, element.date_time);
                         tech.push(element.name_tech, element.date_time);
                     });
+                    let Tomorrow =
+                        typeof admin[2] === "undefined" ? "-" : admin[2];
+                    let adminTomorrow =
+                        typeof admin[3] === "undefined" ? "-" : admin[3];
+                    let techTomorrow =
+                        typeof tech[2] === "undefined" ? "-" : tech[2];
                     let formatMessage1 = {
                         type: "flex",
                         altText: "เวรบ่ายศูนย์คอมพิวเตอร์ ",
@@ -747,7 +759,7 @@ app.post("/webhook", function(req, res) {
                                             },
                                             {
                                                 type: "text",
-                                                text: admin[2],
+                                                text: Tomorrow,
                                                 gravity: "center",
                                                 flex: 4,
                                                 size: "md",
@@ -825,7 +837,7 @@ app.post("/webhook", function(req, res) {
                                         contents: [
                                             {
                                                 type: "text",
-                                                text: "" + admin[3] + "",
+                                                text: "" + adminTomorrow + "",
                                                 size: "sm",
                                                 color: "#8c8c8c",
                                                 gravity: "center"
@@ -859,7 +871,7 @@ app.post("/webhook", function(req, res) {
                                             },
                                             {
                                                 type: "text",
-                                                text: tech[2],
+                                                text: ""+techTomorrow+"",
                                                 gravity: "center",
                                                 flex: 4,
                                                 size: "md",

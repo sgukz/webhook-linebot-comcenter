@@ -429,6 +429,21 @@ app.post("/webhook", function(req, res) {
                                         cornerRadius: "30px"
                                     }
                                 ]
+                            },
+                            footer: {
+                                type: "box",
+                                layout: "vertical",
+                                contents: [
+                                  {
+                                    type: "button",
+                                    style: "link",
+                                    action: {
+                                      type: "uri",
+                                      label: "ดูเพิ่มเติม",
+                                      uri: "https://show-ot-comcenter.herokuapp.com"
+                                    }
+                                  }
+                                ]
                             }
                         }
                     };
@@ -881,6 +896,21 @@ app.post("/webhook", function(req, res) {
                                         spacing: "lg",
                                         cornerRadius: "30px"
                                     }
+                                ]
+                            },
+                            footer: {
+                                type: "box",
+                                layout: "vertical",
+                                contents: [
+                                  {
+                                    type: "button",
+                                    style: "link",
+                                    action: {
+                                      type: "uri",
+                                      label: "ดูเพิ่มเติม",
+                                      uri: "https://show-ot-comcenter.herokuapp.com"
+                                    }
+                                  }
                                 ]
                             }
                         }

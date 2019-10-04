@@ -11,6 +11,32 @@ app.use(
     })
 );
 app.use(bodyParser.json());
+
+function formateDateTH(dateTime) {
+    let toTwoDigits = num => (num < 10 ? "0" + num : num);
+    let date = dateTime.split("-");
+    let day = parseInt(date[2]);
+    let month = date[1];
+    let strMonthCut = [
+        "",
+        "มกราคม",
+        "กุมภาพันธ์",
+        "มีนาคม",
+        "เมษายน",
+        "พฤษภาคม",
+        "มิถุนายน",
+        "กรกฎาคม",
+        "สิงหาคม",
+        "กันยายน",
+        "ตุลาคม",
+        "พฤศจิกายน",
+        "ธันวาคม"
+    ];
+    let year = parseInt(date[0]) + 543;
+    let createdDate = strMonthCut[month] + " " + year;
+    //console.log(createdDate);
+    return createdDate;
+}
 // router test request
 app.post("/body", function(req, res) {
     let userId = "";
@@ -35,7 +61,7 @@ app.post("/webhook", function(req, res) {
     let day = toTwoDigits(today.getDate());
     let ToDay = moment().format("LL");
     let date_now = `${year}-${month}-${day}`;
-    let Months = moment().format("MMMM YYYY");
+    let Months = formateDateTH(date_now);
     let userMessage = req.body.events[0].message.text;
     let userId = "";
     if (req.body.events[0].source.groupId != undefined) {

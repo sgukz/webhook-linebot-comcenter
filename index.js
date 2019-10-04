@@ -55,8 +55,8 @@ app.post("/webhook", function(req, res) {
                   let tech = [];
                    let data = resp.data;
                     data.dataParse.forEach(element => {
-                        admin.push(element.name_admin, element.date_time);
-                        tech.push(element.name_tech, element.date_time);
+                        admin.push(element.nameAdmin, element.date_time);
+                        tech.push(element.nameTech, element.date_time);
                     });
                     let Tomorrow =
                         typeof admin[2] === "undefined" ? "-" : admin[2];
@@ -523,8 +523,8 @@ app.post("/webhook", function(req, res) {
                     let tech = [];
                     let data = resp.data;
                     data.dataParse.forEach(element => {
-                        admin.push(element.name_admin, element.date_time);
-                        tech.push(element.name_tech, element.date_time);
+                        admin.push(element.nameAdmin, element.date_time);
+                        tech.push(element.nameTech, element.date_time);
                     });
                     let Tomorrow =
                         typeof admin[2] === "undefined" ? "-" : admin[2];

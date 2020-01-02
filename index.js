@@ -126,7 +126,7 @@ app.post("/webhook", function(req, res) {
                                 contents: [
                                     {
                                         type: "text",
-                                        text: date_now,
+                                        text: "111222",
                                         size: "md",
                                         weight: "bold"
                                     },

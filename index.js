@@ -13,10 +13,9 @@ app.use(
 app.use(bodyParser.json());
 
 function formateDateTH(dateTime) {
-    let toTwoDigits = num => (num < 10 ? "0" + num : num);
     let date = dateTime.split("-");
     let day = parseInt(date[2]);
-    let month = date[1];
+    let month = parseInt(date[1]);
     let strMonthCut = [
         "",
         "มกราคม",

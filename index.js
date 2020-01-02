@@ -106,7 +106,7 @@ app.post("/webhook", function(req, res) {
                                         contents: [
                                             {
                                                 type: "text",
-                                                text: "เวรบ่ายศูนย์คอมพิวเตอร์",
+                                                text: "เวรบ่ายศูนย์คอมพิวเตอร์ "+date_now,
                                                 color: "#ffffff",
                                                 size: "xl",
                                                 flex: 1,

@@ -11,9 +11,9 @@ app.use(
     })
 );
 app.use(bodyParser.json());
-const APP_URL = "http://61.19.127.228:3000";
+const APP_URL = "http://sgdev.tech:3000";
 
-function formateDateTH(dateTime) {
+function formateDateTH(dateTime, style) {
     let date = dateTime.split("-");
     let day = parseInt(date[2]);
     let month = parseInt(date[1]);
@@ -33,7 +33,11 @@ function formateDateTH(dateTime) {
         "ธันวาคม"
     ];
     let year = parseInt(date[0]) + 543;
-    let createdDate = strMonthCut[month] + " " + year;
+
+    let createdDate =
+        style === 1
+            ? strMonthCut[month] + " " + year
+            : day +" "+ strMonthCut[month] + " " + year;
     //console.log(createdDate);
     return createdDate;
 }
@@ -56,12 +60,11 @@ app.post("/webhook", function(req, res) {
     const toTwoDigits = num => (num < 10 ? "0" + num : num);
     let today = new Date();
     let year = today.getFullYear();
-    let year_TH = parseInt(today.getFullYear()) + 543;
     let month = toTwoDigits(today.getMonth() + 1);
     let day = toTwoDigits(today.getDate());
-    let ToDay = moment().format("LL");
     let date_now = `${year}-${month}-${day}`;
-    let Months = formateDateTH(date_now);
+    let Months = formateDateTH(date_now, 1);
+    let thaiDate = formateDateTH(date_now, 2);
     let userMessage = req.body.events[0].message.text;
     let userId = "";
     if (req.body.events[0].source.groupId != undefined) {
@@ -482,6 +485,7 @@ app.post("/webhook", function(req, res) {
         userMessage == "เวรเที่ยงใคร" ||
         userMessage == "เที่ยง"
     ) {
+        let dateNow = formateDateTH(date_now, 2);
         axios
             .post(APP_URL+"/getDuty", {
                 dateStart: date_now
@@ -497,8 +501,8 @@ app.post("/webhook", function(req, res) {
                         type: "bubble",
                         styles: {
                             header: {
-                                backgroundColor: "#28b463"
-                            }
+                                backgroundColor: "#28b463",
+                            },
                         },
                         header: {
                             type: "box",
@@ -511,9 +515,9 @@ app.post("/webhook", function(req, res) {
                                     size: "md",
                                     gravity: "top",
                                     color: "#FFFFFF",
-                                    flex: 0
-                                }
-                            ]
+                                    flex: 0,
+                                },
+                            ],
                         },
                         body: {
                             type: "box",
@@ -521,19 +525,19 @@ app.post("/webhook", function(req, res) {
                             contents: [
                                 {
                                     type: "text",
-                                    text: "วันที่ " + ToDay,
-                                    align: "center"
+                                    text: "วันที่ " + thaiDate,
+                                    align: "center",
                                 },
                                 {
                                     type: "text",
                                     text: result,
                                     weight: "bold",
                                     size: "md",
-                                    align: "center"
-                                }
-                            ]
-                        }
-                    }
+                                    align: "center",
+                                },
+                            ],
+                        },
+                    },
                 };
                 reply(userId, formatMessage);
                 res.sendStatus(200);
@@ -962,8 +966,8 @@ app.post("/webhook", function(req, res) {
                         type: "bubble",
                         styles: {
                             header: {
-                                backgroundColor: "#28b463"
-                            }
+                                backgroundColor: "#28b463",
+                            },
                         },
                         header: {
                             type: "box",
@@ -976,9 +980,9 @@ app.post("/webhook", function(req, res) {
                                     size: "md",
                                     gravity: "top",
                                     color: "#FFFFFF",
-                                    flex: 0
-                                }
-                            ]
+                                    flex: 0,
+                                },
+                            ],
                         },
                         body: {
                             type: "box",
@@ -986,19 +990,19 @@ app.post("/webhook", function(req, res) {
                             contents: [
                                 {
                                     type: "text",
-                                    text: "วันที่ " + ToDay,
-                                    align: "center"
+                                    text: "วันที่ " + thaiDate,
+                                    align: "center",
                                 },
                                 {
                                     type: "text",
                                     text: result,
                                     weight: "bold",
                                     size: "md",
-                                    align: "center"
-                                }
-                            ]
-                        }
-                    }
+                                    align: "center",
+                                },
+                            ],
+                        },
+                    },
                 };
                 reply(userId, formatMessage2);
                 res.sendStatus(200);

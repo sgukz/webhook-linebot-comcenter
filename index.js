@@ -11,6 +11,7 @@ app.use(
     })
 );
 app.use(bodyParser.json());
+const APP_URL = "http://61.19.127.228:3000";
 
 function formateDateTH(dateTime) {
     let date = dateTime.split("-");
@@ -72,7 +73,7 @@ app.post("/webhook", function(req, res) {
         userMessage == "เวรบ่าย" || userMessage == "บ่าย"
     ) {
         axios
-            .post("http://61.19.127.228:3000/getOT", {
+            .post(APP_URL+"/getOT", {
                 dateStart: ''
             })
             .then(resp => {
@@ -482,7 +483,7 @@ app.post("/webhook", function(req, res) {
         userMessage == "เที่ยง"
     ) {
         axios
-            .post("http://61.19.127.228:3000/getDuty", {
+            .post(APP_URL+"/getDuty", {
                 dateStart: date_now
             })
             .then(resp => {
@@ -540,7 +541,7 @@ app.post("/webhook", function(req, res) {
             .catch(error => console.log("Error :", error));
     } else if (userMessage == "เวร") {
         axios
-            .post("http://61.19.127.228:3000/getOT", {
+            .post(APP_URL+"/getOT", {
                 dateStart: ''
             })
             .then(resp => {
@@ -947,7 +948,7 @@ app.post("/webhook", function(req, res) {
                 return console.log("Error :", error);
             });
         axios
-            .post("http://61.19.127.228:3000/getDuty", {
+            .post(APP_URL+"/getDuty", {
                 dateStart: date_now
             })
             .then(resp => {

@@ -469,7 +469,7 @@ app.post("/webhook", function(req, res) {
                                     action: {
                                       type: "uri",
                                       label: "ดูเพิ่มเติม",
-                                      uri: "https://show-ot-comcenter.herokuapp.com"
+                                      uri: "http://sgdev.tech/show-ot-comcenter/"
                                     }
                                   }
                                 ]

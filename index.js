@@ -11,7 +11,7 @@ app.use(
     })
 );
 app.use(bodyParser.json());
-const APP_URL = "http://sgdev.tech:3000";
+const APP_URL = "http://61.19.127.229:3000";
 
 function formateDateTH(dateTime, style) {
     let date = dateTime.split("-");

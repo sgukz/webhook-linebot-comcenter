@@ -74,7 +74,7 @@ app.post("/webhook", function (req, res) {
     userId = req.body.events[0].source.userId;
   }
   if (subString.length === 2) {
-    if (subString[0].trim() === "เวรบ่าย") {
+    if (subString[0].trim() === "เวรบ่าย" || subString[0].trim() === "บ่าย") {
       let nameUser = subString[1].trim();
       axios
         .post(APP_URL + "/ot/getOTbyName", {
@@ -154,7 +154,7 @@ app.post("/webhook", function (req, res) {
           res.status(200).json({msg: "ok"});
         })
         .catch((error) => console.log("Error :", error));
-    } else if (subString[0].trim() === "เวรเที่ยง") {
+    } else if (subString[0].trim() === "เวรเที่ยง" || subString[0].trim() === "เที่ยง") {
       let nameUser = subString[1].trim();
       axios
         .post(APP_URL + "/ot/getOtAfternoonByName", {

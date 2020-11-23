@@ -66,6 +66,7 @@ app.post("/webhook", function (req, res) {
   let Months = formateDateTH(date_now, 1);
   let thaiDate = formateDateTH(date_now, 2);
   let userId = "";
+  // let userMessage = "เวรบ่าย,ปัสธร";
   let userMessage = req.body.events[0].message.text;
   let subString = userMessage.split(",");
   if (req.body.events[0].source.groupId != undefined) {
@@ -97,6 +98,7 @@ app.post("/webhook", function (req, res) {
             listDate.push({
               type: "text",
               text: "วันที่ ",
+              margin: "10px",
               contents: [
                 {
                   type: "span",
@@ -176,6 +178,7 @@ app.post("/webhook", function (req, res) {
             listDate.push({
               type: "text",
               text: "วันที่ ",
+              margin: "10px",
               contents: [
                 {
                   type: "span",

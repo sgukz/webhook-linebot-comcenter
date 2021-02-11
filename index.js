@@ -844,7 +844,7 @@ app.post("/webhook", function (req, res) {
                   action: {
                     type: "uri",
                     label: "ดูเพิ่มเติม",
-                    uri: "http://sgdev.tech/show-ot-comcenter/",
+                    uri: "http://sgdev.tech/show-ot-comcenter/comcenter.php",
                   },
                 },
               ],

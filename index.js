@@ -11,7 +11,7 @@ app.use(
   })
 );
 app.use(bodyParser.json());
-const APP_URL = "http://61.19.127.228:8090";
+const APP_URL = "http://61.19.127.229:8090";
 
 function formateDateTH(dateTime, style) {
   let date = dateTime.split("-");
@@ -614,7 +614,7 @@ app.post("/webhook", function (req, res) {
                   action: {
                     type: "uri",
                     label: "ดูเพิ่มเติม",
-                    uri: "http://sgdev.tech/show-ot-comcenter/",
+                    uri: "http://comcenter.reh.go.th/show-ot-comcenter/",
                   },
                 },
               ],
@@ -844,7 +844,7 @@ app.post("/webhook", function (req, res) {
                   action: {
                     type: "uri",
                     label: "ดูเพิ่มเติม",
-                    uri: "http://sgdev.tech/show-ot-comcenter/comcenter.php",
+                    uri: "http://comcenter.reh.go.th/show-ot-comcenter/comcenter.php",
                   },
                 },
               ],

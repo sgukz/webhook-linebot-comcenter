@@ -1,18 +1,26 @@
 {
-    "name": "webhook-echo-sample",
-    "version": "1.0.0",
-    "description": "Webhook echo sample",
-    "main": "index.js",
-    "scripts": {
-        "start": "node index.js"
-    },
-    "author": "Sunil Syal",
-    "dependencies": {
-        "axios": "^0.19.0",
-        "body-parser": "^1.15.0",
-        "express": "^4.13.4",
-        "moment": "^2.24.0",
-        "request": "^2.88.0",
-        "sharp": "^0.22.1"
-    }
+  "name": "webhook-linebot-comcenter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sgukz/webhook-linebot-comcenter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sgukz/webhook-linebot-comcenter/issues"
+  },
+  "homepage": "https://github.com/sgukz/webhook-linebot-comcenter#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "moment": "^2.29.1",
+    "request": "^2.88.2"
+  }
 }

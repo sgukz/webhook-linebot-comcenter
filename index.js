@@ -51,7 +51,7 @@ app.post("/body", function (req, res) {
   }
   let formatMessage = {
     type: "text",
-    text: JSON.stringify(req.body),
+    text: JSON.stringify(req.body)
   };
   reply(userId, formatMessage);
   res.sendStatus(200);

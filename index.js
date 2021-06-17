@@ -79,13 +79,21 @@ app.post("/webhook", function (req, res) {
     axios
       .get(APP_URL + "/ot/getOTtoDay")
       .then((resp) => {
-      let formatMessage = {
-    type: "text",
-    text: JSON.stringify(resp.data)
-  };
-  reply(userId, formatMessage);
-  res.sendStatus(200);
+        let formatMessage = {
+          type: "text",
+          text: JSON.stringify(resp.data)
+         };
+        reply(userId, formatMessage);
+          res.sendStatus(200);
         })
+      .catch((error) => {
+      let formatMessage = {
+          type: "text",
+          text: JSON.stringify(error)
+         };
+        reply(userId, formatMessage);
+          res.sendStatus(200);
+      });
   }
   
 //   let userId = "";

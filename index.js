@@ -75,8 +75,7 @@ app.post("/webhook", function (req, res) {
     userId = req.body.events[0].source.userId;
   }
   
-  if (userMessage == "เวรบ่าย" || userMessage == "บ่าย") {
-    axios
+ axios
       .get(APP_URL + "/ot/getOTtoDay")
       .then((resp) => {
         let formatMessage = {
@@ -93,8 +92,7 @@ app.post("/webhook", function (req, res) {
          };
         reply(userId, formatMessage);
           res.sendStatus(200);
-      });
-  }
+      })
   
 //   let userId = "";
 //   if (req.body.events[0].source.groupId != undefined) {

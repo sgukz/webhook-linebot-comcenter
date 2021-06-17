@@ -57,19 +57,6 @@ app.post("/body", function (req, res) {
   res.sendStatus(200);
 });
 app.post("/webhook", function (req, res) {
-  let userId = "";
-  if (req.body.events[0].source.groupId != undefined) {
-    userId = req.body.events[0].source.groupId;
-  } else {
-    userId = req.body.events[0].source.userId;
-  }
-  let formatMessage = {
-    type: "text",
-    text: req.body.events[0].message.text
-  };
-  reply(userId, formatMessage);
-  res.sendStatus(200);
-  /*
   const toTwoDigits = (num) => (num < 10 ? "0" + num : num);
   let today = new Date();
   let year = today.getFullYear();
@@ -87,6 +74,29 @@ app.post("/webhook", function (req, res) {
   } else {
     userId = req.body.events[0].source.userId;
   }
+  
+  if (userMessage == "เวรบ่าย" || userMessage == "บ่าย") {
+    axios
+      .get(APP_URL + "/ot/getOTtoDay")
+      .then((resp) => {
+      let formatMessage = {
+    type: "text",
+    text: JSON.stringify(resp.data)
+  };
+  reply(userId, formatMessage);
+  res.sendStatus(200);
+        })
+  }
+  
+//   let userId = "";
+//   if (req.body.events[0].source.groupId != undefined) {
+//     userId = req.body.events[0].source.groupId;
+//   } else {
+//     userId = req.body.events[0].source.userId;
+//   }
+  
+  /*
+  
   if (subString.length === 2) {
     if (subString[0].trim() === "เวรบ่าย" || subString[0].trim() === "บ่าย") {
       let nameUser = subString[1].trim();

@@ -57,6 +57,19 @@ app.post("/body", function (req, res) {
   res.sendStatus(200);
 });
 app.post("/webhook", function (req, res) {
+  let userId = "";
+  if (req.body.events[0].source.groupId != undefined) {
+    userId = req.body.events[0].source.groupId;
+  } else {
+    userId = req.body.events[0].source.userId;
+  }
+  let formatMessage = {
+    type: "text",
+    text: req.body.events[0].message.text
+  };
+  reply(userId, formatMessage);
+  res.sendStatus(200);
+  /*
   const toTwoDigits = (num) => (num < 10 ? "0" + num : num);
   let today = new Date();
   let year = today.getFullYear();
@@ -856,6 +869,7 @@ app.post("/webhook", function (req, res) {
       })
       .catch((error) => console.log("Error :", error));
   }
+  */
 });
 
 function reply(userId, formatMessage) {

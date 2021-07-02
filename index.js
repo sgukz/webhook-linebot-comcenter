@@ -11,7 +11,7 @@ app.use(
   })
 );
 app.use(bodyParser.json());
-const APP_URL = "http://61.19.127.242:8090";
+const APP_URL = "http://comcenter.reh.go.th:8091";
 
 function formateDateTH(dateTime, style) {
   let date = dateTime.split("-");

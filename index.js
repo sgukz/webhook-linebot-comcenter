@@ -615,7 +615,7 @@ app.post("/webhook", function (req, res) {
                   action: {
                     type: "uri",
                     label: "ดูเพิ่มเติม",
-                    uri: "http://reh.go.th/views-ot/",
+                    uri: "https://reh.go.th/views-ot/",
                   },
                 },
               ],
@@ -845,7 +845,7 @@ app.post("/webhook", function (req, res) {
                   action: {
                     type: "uri",
                     label: "ดูเพิ่มเติม",
-                    uri: "http://reh.go.th/views-ot/comcenter.php",
+                    uri: "https://reh.go.th/views-ot/comcenter.php",
                   },
                 },
               ],

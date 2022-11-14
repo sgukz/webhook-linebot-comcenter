@@ -57,7 +57,7 @@ app.post("/body", function (req, res) {
   res.sendStatus(200);
 });
 app.post("/webhook", function (req, res) {
-  /*
+ 
   const toTwoDigits = (num) => (num < 10 ? "0" + num : num);
   let today = new Date();
   let year = today.getFullYear();
@@ -75,17 +75,6 @@ app.post("/webhook", function (req, res) {
   } else {
     userId = req.body.events[0].source.userId;
   }
-  */
-  
-  let formatMessage = {
-    type: "text",
-    text: JSON.stringify(req.body)
-  };
-  reply(userId, formatMessage);
-  res.sendStatus(200);
-  
-  /*
-  
   
   if (subString.length === 2) {
     if (subString[0].trim() === "เวรบ่าย" || subString[0].trim() === "บ่าย") {
@@ -869,7 +858,6 @@ app.post("/webhook", function (req, res) {
       })
       .catch((error) => console.log("Error :", error));
   }
-  */
 });
 
 function reply(userId, formatMessage) {

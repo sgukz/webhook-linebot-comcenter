@@ -75,6 +75,16 @@ app.post("/webhook", function (req, res) {
     userId = req.body.events[0].source.userId;
   }
   
+  let formatMessage = {
+    type: "text",
+    text: JSON.stringify(req.body)
+  };
+  reply(userId, formatMessage);
+  res.sendStatus(200);
+  
+  /*
+  
+  
   if (subString.length === 2) {
     if (subString[0].trim() === "เวรบ่าย" || subString[0].trim() === "บ่าย") {
       let nameUser = subString[1].trim();
@@ -857,6 +867,7 @@ app.post("/webhook", function (req, res) {
       })
       .catch((error) => console.log("Error :", error));
   }
+  */
 });
 
 function reply(userId, formatMessage) {

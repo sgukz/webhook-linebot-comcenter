@@ -57,6 +57,7 @@ app.post("/body", function (req, res) {
   res.sendStatus(200);
 });
 app.post("/webhook", function (req, res) {
+  /*
   const toTwoDigits = (num) => (num < 10 ? "0" + num : num);
   let today = new Date();
   let year = today.getFullYear();
@@ -74,6 +75,7 @@ app.post("/webhook", function (req, res) {
   } else {
     userId = req.body.events[0].source.userId;
   }
+  */
   
   let formatMessage = {
     type: "text",

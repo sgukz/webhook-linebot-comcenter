@@ -863,8 +863,8 @@ app.post("/webhook", function (req, res) {
 function reply(userId, formatMessage) {
   let headers = {
     "Content-Type": "application/json",
-    Authorization:
-      "Bearer {LrfBCr5OUdr+17b5i78v67kL22pszq/tTjHdgAIdRyZ794bNmr78tH6VrHr38BFej/tuWSjfIcW2VrcNQGJC+/DIVNBZ8OYoXSAZefdZYcRnPCuSQR+iO6G52hKcir98sOq+PEsfZY57C1gpn3E6BwdB04t89/1O/w1cDnyilFU=}", // Channel access token
+    //Authorization: "Bearer {LrfBCr5OUdr+17b5i78v67kL22pszq/tTjHdgAIdRyZ794bNmr78tH6VrHr38BFej/tuWSjfIcW2VrcNQGJC+/DIVNBZ8OYoXSAZefdZYcRnPCuSQR+iO6G52hKcir98sOq+PEsfZY57C1gpn3E6BwdB04t89/1O/w1cDnyilFU=}", // Channel access token
+    Authorization: "Bearer {5cq1A8h1FPtIL92Bm8/QSvhR9R1Lw5x/u7aAmI0MUEFnQa9aRTmbAb25X/1YL1p/hRidBLAcqYF53LDWrqi/aNpSM8brObimFH/n3qh4PcXoiaZtnaiip5rIfXnWywayJZOYfF8W2AKdVsvnNiQlAQdB04t89/1O/w1cDnyilFU=}", // Channel access token
   };
   let body = JSON.stringify({
     to: userId,

@@ -11,7 +11,7 @@ app.use(
   })
 );
 app.use(bodyParser.json());
-const APP_URL = "http://comcenter.reh.go.th:8091";
+const APP_URL = "https://api.reh.go.th/";
 
 function formateDateTH(dateTime, style) {
   let date = dateTime.split("-");
@@ -80,11 +80,9 @@ app.post("/webhook", function (req, res) {
     if (subString[0].trim() === "เวรบ่าย" || subString[0].trim() === "บ่าย") {
       let nameUser = subString[1].trim();
       axios
-        .post(APP_URL + "/ot/getOTbyName", {
-          name: nameUser,
-        })
+        .get(APP_URL + "/ot/getOTbyName?token=8OXo1lEsX-1W5BFoL4LMZJdyOnPUStiwOE_2FRvzp6A&nameComcenter="+nameUser)
         .then((resp) => {
-          let data = resp.data.dataParse;
+          let data = resp.data.data;
           let fullnameUser = data[0].name_comcenter;
           let listDate = [
             {
@@ -161,11 +159,9 @@ app.post("/webhook", function (req, res) {
     } else if (subString[0].trim() === "เวรเที่ยง" || subString[0].trim() === "เที่ยง") {
       let nameUser = subString[1].trim();
       axios
-        .post(APP_URL + "/ot/getOtAfternoonByName", {
-          name: nameUser,
-        })
+        .get(APP_URL + "/ot/getOtAfternoonByName?token=8OXo1lEsX-1W5BFoL4LMZJdyOnPUStiwOE_2FRvzp6A"+nameUser)
         .then((resp) => {
-          let data = resp.data.dataParse;
+          let data = resp.data.data;
           let fullnameUser = data[0].name;
           let listDate = [
             {
@@ -236,12 +232,12 @@ app.post("/webhook", function (req, res) {
   }
   if (userMessage == "เวรบ่าย" || userMessage == "บ่าย") {
     axios
-      .get(APP_URL + "/ot/getOTtoDay")
+      .get(APP_URL + "/ot/getOTtoDay?token=8OXo1lEsX-1W5BFoL4LMZJdyOnPUStiwOE_2FRvzp6A")
       .then((resp) => {
         let admin = [];
         let tech = [];
         let data = resp.data;
-        data.dataParse.forEach((element) => {
+        data.data.forEach((element) => {
           admin.push(element.nameAdmin, element.date_time);
           tech.push(element.nameTech, element.date_time);
         });
@@ -629,9 +625,9 @@ app.post("/webhook", function (req, res) {
       .catch((error) => console.log("Error :", error));
   } else if (userMessage === "เวรเที่ยง" || userMessage == "เที่ยง") {
     axios
-      .get(APP_URL + "/ot/getOtAfternoon")
+      .get(APP_URL + "/ot/getOtAfternoon?token=8OXo1lEsX-1W5BFoL4LMZJdyOnPUStiwOE_2FRvzp6A")
       .then((resp) => {
-        let data = resp.data.dataParse;
+        let data = resp.data.data;
         let date_today = data[0].date_time;
         let name_today = data[0].name;
         let date_tomorrow = data[1].date_time;
@@ -863,8 +859,8 @@ app.post("/webhook", function (req, res) {
 function reply(userId, formatMessage) {
   let headers = {
     "Content-Type": "application/json",
-    //Authorization: "Bearer {LrfBCr5OUdr+17b5i78v67kL22pszq/tTjHdgAIdRyZ794bNmr78tH6VrHr38BFej/tuWSjfIcW2VrcNQGJC+/DIVNBZ8OYoXSAZefdZYcRnPCuSQR+iO6G52hKcir98sOq+PEsfZY57C1gpn3E6BwdB04t89/1O/w1cDnyilFU=}", // Channel access token
-    Authorization: "Bearer {5cq1A8h1FPtIL92Bm8/QSvhR9R1Lw5x/u7aAmI0MUEFnQa9aRTmbAb25X/1YL1p/hRidBLAcqYF53LDWrqi/aNpSM8brObimFH/n3qh4PcXoiaZtnaiip5rIfXnWywayJZOYfF8W2AKdVsvnNiQlAQdB04t89/1O/w1cDnyilFU=}", // Channel access token
+    Authorization: "Bearer {LrfBCr5OUdr+17b5i78v67kL22pszq/tTjHdgAIdRyZ794bNmr78tH6VrHr38BFej/tuWSjfIcW2VrcNQGJC+/DIVNBZ8OYoXSAZefdZYcRnPCuSQR+iO6G52hKcir98sOq+PEsfZY57C1gpn3E6BwdB04t89/1O/w1cDnyilFU=}", // Channel access token
+    //Authorization: "Bearer {5cq1A8h1FPtIL92Bm8/QSvhR9R1Lw5x/u7aAmI0MUEFnQa9aRTmbAb25X/1YL1p/hRidBLAcqYF53LDWrqi/aNpSM8brObimFH/n3qh4PcXoiaZtnaiip5rIfXnWywayJZOYfF8W2AKdVsvnNiQlAQdB04t89/1O/w1cDnyilFU=}", // Channel access token
   };
   let body = JSON.stringify({
     to: userId,

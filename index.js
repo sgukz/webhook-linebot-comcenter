@@ -42,7 +42,7 @@ function formateDateTH(dateTime, style) {
   return createdDate;
 }
 // router test request
-app.post("/", function (req, res) {
+app.get("/", function (req, res) {
   res.status(200).json({status: 200, msg: "service status actived"})
 });
 

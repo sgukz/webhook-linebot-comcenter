@@ -83,6 +83,12 @@ app.post("/webhook", function (req, res) {
         .get(APP_URL + "/ot/getOTbyName?token=8OXo1lEsX-1W5BFoL4LMZJdyOnPUStiwOE_2FRvzp6A&nameComcenter="+nameUser)
         .then((resp) => {
           let data = resp.data.data;
+        let formatMessage = {
+            type: "text",
+          text: JSON.stringify(data)
+          };
+        reply(userId, formatMessage);
+        /*
           let fullnameUser = data[0].name_comcenter;
           let listDate = [
             {
@@ -154,6 +160,7 @@ app.post("/webhook", function (req, res) {
           //   console.log(formatMessage);
           reply(userId, formatMessage);
           res.status(200).json({msg: "ok"});
+          */
         })
         .catch((error) => console.log("Error :", error));
     } else if (subString[0].trim() === "เวรเที่ยง" || subString[0].trim() === "เที่ยง") {

@@ -81,7 +81,7 @@ app.post("/webhook", function (req, res) {
   if (subString.length === 2) {
     if (subString[0].trim() === "เวรบ่าย" || subString[0].trim() === "บ่าย") {
       let nameUser = subString[1].trim();
-      let URL = `${APP_URL}/ot/getOTbyName?token=8OXo1lEsX-1W5BFoL4LMZJdyOnPUStiwOE_2FRvzp6A&nameComcenter=${nameUser}`
+      let URL = encodeURI(`${APP_URL}/ot/getOTbyName?token=8OXo1lEsX-1W5BFoL4LMZJdyOnPUStiwOE_2FRvzp6A&nameComcenter=${nameUser}`)
      axios
     .get(URL)
     .then((resp) => {

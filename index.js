@@ -101,10 +101,17 @@ app.post("/webhook", function (req, res) {
   if (subString.length === 2) {
     if (subString[0].trim() === "เวรบ่าย" || subString[0].trim() === "บ่าย") {
       let nameUser = subString[1].trim();
+      let URL = `${APP_URL}/ot/getOTbyName?token=8OXo1lEsX-1W5BFoL4LMZJdyOnPUStiwOE_2FRvzp6A&nameComcenter=${nameUser}`
       axios
-        .get(APP_URL + "/ot/getOTbyName?token=8OXo1lEsX-1W5BFoL4LMZJdyOnPUStiwOE_2FRvzp6A&nameComcenter="+nameUser)
+        .get()
         .then((resp) => {
           let data = resp.data.data;
+          let formatMessage = {
+            type: "text",
+            text: JSON.stringify(data)
+          };
+          reply(userId, formatMessage);
+          /*
           let fullnameUser = data[0].name_comcenter;
           let listDate = [
             {
@@ -175,11 +182,12 @@ app.post("/webhook", function (req, res) {
           };
           reply(userId, formatMessage);
           res.status(200).json({msg: "ok"});
+          */
         })
         .catch((error) => {
         let formatMessage = {
           type: "text",
-          text: JSON.stringify(error)
+          text: JSON.stringify(URL)
         };
         reply(userId, formatMessage);
       });

@@ -57,7 +57,6 @@ app.post("/body", function (req, res) {
   res.sendStatus(200);
 });
 app.post("/webhook", function (req, res) {
- 
   const toTwoDigits = (num) => (num < 10 ? "0" + num : num);
   let today = new Date();
   let year = today.getFullYear();
@@ -67,7 +66,6 @@ app.post("/webhook", function (req, res) {
   let Months = formateDateTH(date_now, 1);
   let thaiDate = formateDateTH(date_now, 2);
   let userId = "";
-  // let userMessage = "เวรบ่าย,ปัสธร";
   let userMessage = req.body.events[0].message.text;
   let subString = userMessage.split(",");
   if (req.body.events[0].source.groupId != undefined) {
@@ -75,7 +73,26 @@ app.post("/webhook", function (req, res) {
   } else {
     userId = req.body.events[0].source.userId;
   }
-  
+  axios
+      .get(APP_URL + "/ot/getOtAfternoon?token=8OXo1lEsX-1W5BFoL4LMZJdyOnPUStiwOE_2FRvzp6A")
+      .then((resp) => {
+        let data = resp.data.data;
+        let formatMessage = {
+          type: "text",
+          text: JSON.stringify(data)
+        };
+        reply(userId, formatMessage);
+        res.sendStatus(200);
+      })
+      .catch((error) => {
+        let formatMessage = {
+          type: "text",
+          text: JSON.stringify(error)
+        };
+        reply(userId, formatMessage);
+      });
+      
+  /*
   if (subString.length === 2) {
     if (subString[0].trim() === "เวรบ่าย" || subString[0].trim() === "บ่าย") {
       let nameUser = subString[1].trim();
@@ -83,12 +100,6 @@ app.post("/webhook", function (req, res) {
         .get(APP_URL + "/ot/getOTbyName?token=8OXo1lEsX-1W5BFoL4LMZJdyOnPUStiwOE_2FRvzp6A&nameComcenter="+nameUser)
         .then((resp) => {
           let data = resp.data.data;
-        let formatMessage = {
-            type: "text",
-          text: JSON.stringify(data)
-          };
-        reply(userId, formatMessage);
-        /*
           let fullnameUser = data[0].name_comcenter;
           let listDate = [
             {
@@ -157,10 +168,8 @@ app.post("/webhook", function (req, res) {
               },
             },
           };
-          //   console.log(formatMessage);
           reply(userId, formatMessage);
           res.status(200).json({msg: "ok"});
-          */
         })
         .catch((error) => console.log("Error :", error));
     } else if (subString[0].trim() === "เวรเที่ยง" || subString[0].trim() === "เที่ยง") {
@@ -861,6 +870,7 @@ app.post("/webhook", function (req, res) {
       })
       .catch((error) => console.log("Error :", error));
   }
+  */
 });
 
 function reply(userId, formatMessage) {

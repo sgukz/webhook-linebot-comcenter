@@ -42,6 +42,10 @@ function formateDateTH(dateTime, style) {
   return createdDate;
 }
 // router test request
+app.post("/", function (req, res) {
+  res.status(200).json({status: 200, msg: "service status actived"})
+});
+
 app.post("/body", function (req, res) {
   let userId = "";
   if (req.body.events[0].source.groupId != undefined) {

@@ -11,7 +11,7 @@ app.use(
   })
 );
 app.use(bodyParser.json());
-const APP_URL = "https://api.reh.go.th";
+const APP_URL = "http://api.reh.go.th:9000";
 
 function formateDateTH(dateTime, style) {
   let date = dateTime.split("-");

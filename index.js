@@ -77,6 +77,7 @@ app.post("/webhook", function (req, res) {
   } else {
     userId = req.body.events[0].source.userId;
   }
+  /*
   axios
       .get(APP_URL + "/ot/getOtAfternoon?token=8OXo1lEsX-1W5BFoL4LMZJdyOnPUStiwOE_2FRvzp6A")
       .then((resp) => {
@@ -95,8 +96,8 @@ app.post("/webhook", function (req, res) {
         };
         reply(userId, formatMessage);
       });
-      
-  /*
+      */
+     
   if (subString.length === 2) {
     if (subString[0].trim() === "เวรบ่าย" || subString[0].trim() === "บ่าย") {
       let nameUser = subString[1].trim();
@@ -175,7 +176,13 @@ app.post("/webhook", function (req, res) {
           reply(userId, formatMessage);
           res.status(200).json({msg: "ok"});
         })
-        .catch((error) => console.log("Error :", error));
+        .catch((error) => {
+        let formatMessage = {
+          type: "text",
+          text: JSON.stringify(error)
+        };
+        reply(userId, formatMessage);
+      });
     } else if (subString[0].trim() === "เวรเที่ยง" || subString[0].trim() === "เที่ยง") {
       let nameUser = subString[1].trim();
       axios
@@ -247,7 +254,13 @@ app.post("/webhook", function (req, res) {
                     res.status(200).json({msg: "ok"});
 
         })
-        .catch((error) => console.log("Error :", error));
+        .catch((error) => {
+        let formatMessage = {
+          type: "text",
+          text: JSON.stringify(error)
+        };
+        reply(userId, formatMessage);
+      });
     }
   }
   if (userMessage == "เวรบ่าย" || userMessage == "บ่าย") {
@@ -642,7 +655,13 @@ app.post("/webhook", function (req, res) {
         reply(userId, formatMessage);
         res.sendStatus(200);
       })
-      .catch((error) => console.log("Error :", error));
+      .catch((error) => {
+        let formatMessage = {
+          type: "text",
+          text: JSON.stringify(error)
+        };
+        reply(userId, formatMessage);
+      });
   } else if (userMessage === "เวรเที่ยง" || userMessage == "เที่ยง") {
     axios
       .get(APP_URL + "/ot/getOtAfternoon?token=8OXo1lEsX-1W5BFoL4LMZJdyOnPUStiwOE_2FRvzp6A")
@@ -872,9 +891,14 @@ app.post("/webhook", function (req, res) {
         reply(userId, formatMessage);
         res.sendStatus(200);
       })
-      .catch((error) => console.log("Error :", error));
+      .catch((error) => {
+        let formatMessage = {
+          type: "text",
+          text: JSON.stringify(error)
+        };
+        reply(userId, formatMessage);
+      });
   }
-  */
 });
 
 function reply(userId, formatMessage) {

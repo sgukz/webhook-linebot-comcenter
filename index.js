@@ -86,12 +86,6 @@ app.post("/webhook", function (req, res) {
     .get(URL)
     .then((resp) => {
         let data = resp.data.data;
-        let formatMessage = {
-            type: "text",
-            text: JSON.stringify(data)
-        };
-        reply(userId, formatMessage);
-          /*
           let fullnameUser = data[0].name_comcenter;
           let listDate = [
             {
@@ -162,7 +156,6 @@ app.post("/webhook", function (req, res) {
           };
           reply(userId, formatMessage);
           res.status(200).json({msg: "ok"});
-          */
         })
         .catch((error) => {
         let formatMessage = {
@@ -173,8 +166,9 @@ app.post("/webhook", function (req, res) {
       });
     } else if (subString[0].trim() === "เวรเที่ยง" || subString[0].trim() === "เที่ยง") {
       let nameUser = subString[1].trim();
+      let URL = encodeURI(`${APP_URL}/ot/getOtAfternoonByName?token=8OXo1lEsX-1W5BFoL4LMZJdyOnPUStiwOE_2FRvzp6A&nameComcenter=${nameUser}`)
       axios
-        .get(APP_URL + "/ot/getOtAfternoonByName?token=8OXo1lEsX-1W5BFoL4LMZJdyOnPUStiwOE_2FRvzp6A"+nameUser)
+        .get(URL)
         .then((resp) => {
           let data = resp.data.data;
           let fullnameUser = data[0].name;

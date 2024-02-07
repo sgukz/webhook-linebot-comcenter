@@ -47,10 +47,10 @@ app.get("/", function (req, res) {
 });
 
 app.post("/body", function (req, res) {
-    let userId = req.body.events[0].source.userId;
+    let userId = req.body.events[0]?.source.userId;
     let formatMessage = {
         type: "text",
-        text: JSON.stringify(req.body.events[0].message)
+        text: JSON.stringify(req.body.events[0]?.source)
     };
     reply(userId, formatMessage);
     res.sendStatus(200);

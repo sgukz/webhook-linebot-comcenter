@@ -47,15 +47,10 @@ app.get("/", function (req, res) {
 });
 
 app.post("/body", function (req, res) {
-    let userId = "";
-    if (req.body.events[0].source.groupId != undefined) {
-        userId = req.body.events[0].source.groupId;
-    } else {
-        userId = req.body.events[0].source.userId;
-    }
+    let userId = req.body.events[0].source.userId;
     let formatMessage = {
         type: "text",
-        text: JSON.stringify(req.body)
+        text: JSON.stringify(req.body.events[0].message)
     };
     reply(userId, formatMessage);
     res.sendStatus(200);
@@ -891,7 +886,7 @@ app.post("/webhook", function (req, res) {
 });
 
 function reply(userId, formatMessage) {
-    const KEY_API = "LrfBCr5OUdr+17b5i78v67kL22pszq/tTjHdgAIdRyZ794bNmr78tH6VrHr38BFej/tuWSjfIcW2VrcNQGJC+/DIVNBZ8OYoXSAZefdZYcRnPCuSQR+iO6G52hKcir98sOq+PEsfZY57C1gpn3E6BwdB04t89/1O/w1cDnyilFU="
+    const KEY_API = "xHGZy7ih0yDUH3pBpe/wiOEgDF4kVnAqr64zXr7y/H2HRZVydE+hvXB1CU5RjnSk3dygASPut2/fD42ocwSVuG47n7eSRkjlns/2w2VfBz3dOGwx8K9ZfWdKaQ54PIVHheRqrBO53ivj5n18+4L+gQdB04t89/1O/w1cDnyilFU="
     const URL = "https://api.line.me/v2/bot/message/push"
     const header = {
         "Content-Type": "application/json",
